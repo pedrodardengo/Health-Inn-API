@@ -5,7 +5,14 @@ import {EmployeeDTO} from "../../../src/employee/dto/employee.dto";
 import {faker} from "@faker-js/faker";
 import * as cnpjGenerator from "@fnando/cnpj"
 import {WorkRelation} from "../../../src/company/entities/work-relation.entity";
+import {EmployeeExampleBuilder} from "../../tools/employee-example-builder";
 
+
+type GivenWorkRelation = {
+    isActive: boolean,
+    registered: boolean,
+    forEmployee: string | 'new',
+}
 
 export class CompanyDSL {
 
@@ -26,11 +33,11 @@ export class CompanyDSL {
         }
     }
 
-    generateRandomWorkRelation(employee: EmployeeDTO, company: CompanyDTO, isActive: boolean): WorkRelationDTO {
+    generateRandomWorkRelation(employeeCPF: string, companyCNPJ: string, isActive: boolean): WorkRelationDTO {
         return {
             isActive,
-            companyCNPJ: company.cnpj,
-            employeeCPF: employee.cpf,
+            companyCNPJ,
+            employeeCPF,
             position: faker.name.jobTitle(),
             sector: faker.name.jobType()
         }
@@ -46,5 +53,34 @@ export class CompanyDSL {
 
     assertWorkRelationMatch(workRelation: WorkRelation, workRelationDTO: WorkRelationDTO): void {
         expect(workRelation).toMatchObject(workRelationDTO)
+    }
+
+    async givenCompany(): Promise<CompanyDTO> {
+        const company = this.generateRandomCompany()
+        await this.registerCompany(company)
+        return company
+    }
+
+    async givenWorkRelation(
+        config: GivenWorkRelation = {isActive: true, registered: true, forEmployee: 'new'}
+    ): Promise<WorkRelationDTO> {
+        const company = await this.givenCompany()
+        let cpf: string
+        if (config.forEmployee == 'new') {
+            const employee = new EmployeeExampleBuilder().employee
+            await this.restDriver.registerEmployee(employee)
+            cpf = employee.cpf
+        }
+        else {
+            cpf = config.forEmployee
+        }
+        const workRelation = this.generateRandomWorkRelation(cpf, company.cnpj, config.isActive)
+        if (config.registered) await this.registerWorkRelation(workRelation)
+        return workRelation
+    }
+
+    async assertStatusOfWorkRelation(companyCNPJ: string, employeeCPF: string, shouldBeActive: boolean): Promise<void> {
+        const workRelation = await this.restDriver.retrieveWorkRelation(companyCNPJ, employeeCPF)
+        expect(workRelation.isActive).toBe(shouldBeActive)
     }
 }

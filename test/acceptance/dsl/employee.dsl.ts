@@ -26,4 +26,10 @@ export class EmployeeDSL {
     public assertEmployeesAreTheSame(employeeDTO1: EmployeeDTO, employeeDTO2: EmployeeDTO): void {
         return expect(employeeDTO1).toMatchObject(employeeDTO2)
     }
+
+    public async givenEmployee(): Promise<EmployeeDTO> {
+        const employee = this.generateRandomEmployee()
+        await this.registerEmployee(employee)
+        return employee
+    }
 }
