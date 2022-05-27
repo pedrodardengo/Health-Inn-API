@@ -5,14 +5,19 @@ import {CompanyRepository} from "./repositories/interface.repositories";
 import {CompanyController} from "./controllers/company.controller";
 import {CompanyService} from "./services/company.service";
 import {CompanyRepositoryImpl} from "./repositories/company-repository-impl";
+import {WorkRelation} from "./entities/work-relation.entity";
+import {EmployeeModule} from "../employee/employee.module";
 
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Company])],
+    imports: [
+        EmployeeModule,
+        TypeOrmModule.forFeature([Company, WorkRelation])
+    ],
     providers: [
         { useClass: CompanyRepositoryImpl, provide: CompanyRepository },
-        CompanyService
+        CompanyService,
     ],
     controllers: [CompanyController]
 })
-export class EmployeeModule {}
+export class CompanyModule {}

@@ -1,7 +1,8 @@
-import {Injectable} from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import {EmployeeDTO} from "../dto/employee.dto";
 import {EmployeeRepository} from "../repositories/interface.repository";
 import {Employee} from "../entities/employee.entity";
+import {EMPLOYEE_MESSAGES} from "../../exceptions/messages.exceptions";
 
 @Injectable()
 export class EmployeeService {
@@ -15,7 +16,9 @@ export class EmployeeService {
     }
 
     async getEmployeeByCPF(cpf: string): Promise<Employee> {
-        return await this.employeeRepo.getByCPF(cpf)
+        const employee =  await this.employeeRepo.getByCPF(cpf)
+        if (!employee) throw new NotFoundException(EMPLOYEE_MESSAGES.NOT_FOUND(cpf))
+        return employee
     }
 
 }

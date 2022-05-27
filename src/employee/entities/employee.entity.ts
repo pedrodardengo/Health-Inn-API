@@ -1,4 +1,4 @@
-import {Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Address} from "./adress.entity";
 import {EmployeeDTO} from "../dto/employee.dto";
 import {WorkRelation} from "../../company/entities/work-relation.entity";
@@ -30,7 +30,7 @@ export class Employee {
     @JoinColumn()
     address: Address
 
-    @ManyToOne(() => WorkRelation, workRelation => workRelation.employee)
+    @OneToMany(() => WorkRelation, workRelation => workRelation.employee, {onDelete: "CASCADE"})
     workRelations: WorkRelation[]
 
     build(employeeDTO: EmployeeDTO): Employee {

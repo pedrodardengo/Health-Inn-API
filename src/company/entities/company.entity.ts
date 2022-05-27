@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {CompanyDTO} from "../dto/company.dto";
 import {WorkRelation} from "./work-relation.entity";
 
@@ -14,7 +14,7 @@ export class Company {
     @Column()
     cnpj: string
 
-    @ManyToOne(() => WorkRelation, workRelation => workRelation.company)
+    @OneToMany(() => WorkRelation, workRelation => workRelation.company, {onDelete: "CASCADE"})
     workRelations: WorkRelation[]
 
     build(companyDTO: CompanyDTO): Company {

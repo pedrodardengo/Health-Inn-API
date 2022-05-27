@@ -1,8 +1,8 @@
 import {AppConn} from "../drivers/app.conn";
 import {EmployeeDSL} from "../dsl/employee.dsl";
-import {getConnection} from "typeorm";
 import {RestDriver} from "../drivers/rest.driver";
-import {RawEmployee} from "../../example-fatcories/employee-example-builder";
+import {EmployeeDTO} from "../../../src/employee/dto/employee.dto";
+import {clearDB} from "../../tools/database.interactions";
 
 describe('Employees Behavior', () => {
     let employeeDSL: EmployeeDSL
@@ -21,16 +21,12 @@ describe('Employees Behavior', () => {
     })
 
     afterEach(async () => {
-        const entities = getConnection().entityMetadatas;
-        for (const entity of entities) {
-            const repository = getConnection().getRepository(entity.name)
-            await repository.clear()
-        }
+        await clearDB()
     });
 
     it('should be able to register an employee and retrieve the employee that was created', async () => {
         // Arrange
-        const employeeData: RawEmployee = employeeDSL.generateRandomEmployee()
+        const employeeData: EmployeeDTO = employeeDSL.generateRandomEmployee()
 
         // Act
         await employeeDSL.registerEmployee(employeeData)
@@ -39,6 +35,4 @@ describe('Employees Behavior', () => {
         // Assert
         employeeDSL.assertEmployeesAreTheSame(employee, employeeData)
     })
-
-    it("", async () => {})
 })

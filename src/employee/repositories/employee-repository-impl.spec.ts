@@ -3,7 +3,7 @@ import {Repository} from "typeorm";
 import {Employee} from "../entities/employee.entity";
 import {Address} from "../entities/adress.entity";
 import {getRepositoryToken, TypeOrmModule} from "@nestjs/typeorm";
-import {EmployeeRepositoryImpl} from "./employee-repository-impl.service";
+import {EmployeeRepositoryImpl} from "./employee-repository-impl";
 
 
 describe('EmployeeRepositoryImpl Integration test', () => {

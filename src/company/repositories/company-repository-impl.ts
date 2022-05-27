@@ -5,6 +5,7 @@ import {Company} from "../entities/company.entity";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {WorkRelation} from "../entities/work-relation.entity";
+import {Employee} from "../../employee/entities/employee.entity";
 
 
 @Injectable()
@@ -20,10 +21,18 @@ export class CompanyRepositoryImpl implements CompanyRepository {
     }
 
     async getCompanyByCNPJ(cnpj: string): Promise<Company> {
-        return await this.companyRepo.findOneOrFail({where: {cnpj}})
+        return await this.companyRepo.findOne({where: {cnpj}})
     }
 
     async createWorkRelation(workRelation: WorkRelation): Promise<WorkRelation> {
         return await this.workRelationRepo.save(workRelation)
+    }
+
+    async inactivateAllWorkRelationsOfEmployee(employee: Employee): Promise<void> {
+        await this.workRelationRepo.update({employeeId: employee.id}, {isActive: false})
+    }
+
+    async getWorkRelationByCPFAndCNPJ(employeeId: number, companyId: number): Promise<WorkRelation> {
+        return await this.workRelationRepo.findOne({where: {employeeId, companyId}})
     }
 }

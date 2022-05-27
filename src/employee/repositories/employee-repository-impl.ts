@@ -22,6 +22,6 @@ export class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     async getByCPF(cpf: string): Promise<Employee> {
-        return await this.employeeRepo.findOneOrFail({where: {cpf}, relations: ['address']})
+        return await this.employeeRepo.findOne({where: {cpf}, relations: ['address']})
     }
 }

@@ -1,4 +1,4 @@
-import {Column, Entity, OneToMany} from "typeorm";
+import {Column, Entity, ManyToOne, PrimaryColumn, RelationId} from "typeorm";
 import {Company} from "./company.entity";
 import {Employee} from "../../employee/entities/employee.entity";
 import {WorkRelationDTO} from "../dto/work-relation.dto";
@@ -7,10 +7,18 @@ import {WorkRelationDTO} from "../dto/work-relation.dto";
 @Entity({name: 'WorkRelation'})
 export class WorkRelation {
 
-    @OneToMany(() => Company, company => company.workRelations)
+    @RelationId((workRelation: WorkRelation) => workRelation.company)
+    @PrimaryColumn()
+    companyId: number;
+
+    @ManyToOne(() => Company, company => company.workRelations, {onDelete: "CASCADE"})
     company: Company
 
-    @OneToMany(() => Employee, employee => employee.workRelations)
+    @RelationId((workRelation: WorkRelation) => workRelation.employee)
+    @PrimaryColumn()
+    employeeId: number;
+
+    @ManyToOne(() => Employee, employee => employee.workRelations, {onDelete: "CASCADE"})
     employee: Employee
 
     @Column()
