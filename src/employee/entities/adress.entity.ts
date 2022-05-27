@@ -29,7 +29,10 @@ export class Address {
     @Column()
     zipCode: string
     
-    @OneToOne(() => Employee, employee => employee.address, {onDelete: "CASCADE"})
+    @OneToOne(
+        () => Employee, employee => employee.address,
+        {onDelete: "CASCADE"}
+    )
     employee: Employee
 
     build(address: AddressDTO): Address {

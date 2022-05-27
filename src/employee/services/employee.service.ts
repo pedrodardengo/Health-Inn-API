@@ -3,6 +3,7 @@ import {EmployeeDTO} from "../dto/employee.dto";
 import {EmployeeRepository} from "../repositories/interface.repository";
 import {Employee} from "../entities/employee.entity";
 import {EMPLOYEE_MESSAGES} from "../../exceptions/messages.exceptions";
+import {UpdateEmployeeDTO} from "../dto/update-employee.dto";
 
 @Injectable()
 export class EmployeeService {
@@ -21,4 +22,11 @@ export class EmployeeService {
         return employee
     }
 
+    async deleteEmployeeByCPF(cpf: string): Promise<void> {
+        await this.employeeRepo.deleteByCPF(cpf)
+    }
+
+    async updateEmployee(cpf: string, updateEmployeeDTO: UpdateEmployeeDTO): Promise<void> {
+        await this.employeeRepo.update(cpf, updateEmployeeDTO)
+    }
 }

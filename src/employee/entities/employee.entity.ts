@@ -26,7 +26,10 @@ export class Employee {
     @Column({ nullable: true })
     phoneNumber: string
 
-    @OneToOne(() => Address, address => address.employee, {onDelete: "CASCADE"})
+    @OneToOne(
+        () => Address, address => address.employee,
+        {onDelete: "CASCADE", cascade: true, eager: true}
+    )
     @JoinColumn()
     address: Address
 

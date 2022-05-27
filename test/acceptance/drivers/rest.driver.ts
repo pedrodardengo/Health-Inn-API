@@ -4,6 +4,7 @@ import {EmployeeDTO} from "../../../src/employee/dto/employee.dto";
 import {CompanyDTO} from "../../../src/company/dto/company.dto";
 import {WorkRelationDTO} from "../../../src/company/dto/work-relation.dto";
 import {WorkRelation} from "../../../src/company/entities/work-relation.entity";
+import {UpdateEmployeeDTO} from "../../../src/employee/dto/update-employee.dto";
 
 
 const EMPLOYEE_URL = '/employee'
@@ -23,8 +24,11 @@ export class RestDriver {
             .set('Accept', 'application/json')
     }
 
-    async getEmployee(cpf: string): Promise<EmployeeDTO> {
+    async getEmployee(cpf: string, assertNotFound: boolean): Promise<EmployeeDTO> {
         const response = await this.requester.get(`${EMPLOYEE_URL}/${cpf}`)
+        if (assertNotFound) {
+            expect(response.body.statusCode).toBe(404)
+        }
         return response.body
     }
 
@@ -43,5 +47,15 @@ export class RestDriver {
     async retrieveWorkRelation(cnpj: string, cpf: string): Promise<WorkRelation> {
         const response = await this.requester.get(`${WORK_URL}/${cnpj}/${cpf}`)
         return response.body
+    }
+
+    async deleteEmployee(cpf: string) {
+        await this.requester.delete(`${EMPLOYEE_URL}/${cpf}`)
+    }
+
+    async updateEmployee(cpf: string, updateEmployeeDTO: UpdateEmployeeDTO) {
+        await this.requester.put(`${EMPLOYEE_URL}/${cpf}`)
+            .send(updateEmployeeDTO)
+            .set('Accept', 'application/json')
     }
 }

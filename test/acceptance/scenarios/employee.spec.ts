@@ -35,4 +35,28 @@ describe('Employees Behavior', () => {
         // Assert
         employeeDSL.assertEmployeesAreTheSame(employee, employeeData)
     })
+
+    it ('should be able to delete an employee and not be able to retrieve it', async () => {
+        // Arrange
+        const employeeData = await employeeDSL.givenEmployee()
+
+        // Act
+        await employeeDSL.deleteEmployee(employeeData.cpf)
+
+        // Assert
+        await employeeDSL.assertEmployeeCantBeFound(employeeData.cpf)
+    })
+
+    it ('should be able to update an employee and retrieve the updated employee', async () => {
+        // Arrange
+        const employeeData = await employeeDSL.givenEmployee()
+        const updatedEmployeeData = employeeDSL.generateUpdateEmployeeData()
+
+        // Act
+        await employeeDSL.updateEmployee(employeeData.cpf, updatedEmployeeData)
+        const updatedEmployee = await employeeDSL.getEmployee(employeeData.cpf)
+
+        // Assert
+        employeeDSL.assertEmployeeWasUpdated(updatedEmployee, employeeData, updatedEmployeeData)
+    })
 })
