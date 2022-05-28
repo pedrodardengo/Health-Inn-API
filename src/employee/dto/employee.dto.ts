@@ -1,4 +1,4 @@
-import { IsEmail, IsString, ValidateIf, IsNumberString } from "class-validator"
+import {IsEmail, IsString, ValidateIf, IsNumberString, IsOptional} from "class-validator"
 import {IsCPF} from "brazilian-class-validator";
 import { AddressDTO } from "./address.dto"
 import {IsStringDate} from "@nestjsi/class-validator";
@@ -49,19 +49,26 @@ export class EmployeeDTO {
     })
     address: AddressDTO
 
-    @ValidateIf(dto => !dto.email || dto.phoneNumber)
+
+    @ValidateIf(
+        dto => !dto.email || dto.phoneNumber,
+        {message: 'Either email or phone number must be informed'}
+    )
     @IsString()
     @ApiPropertyOptional({
         description: "Employee's phone number",
         example: '5587933331111'
     })
-    phoneNumber: string
+    phoneNumber?: string
 
-    @ValidateIf(dto => !dto.phoneNumber || dto.email)
+    @ValidateIf(
+        dto => !dto.phoneNumber || dto.email,
+        {message: 'Either email or phone number must be informed'}
+    )
     @IsEmail()
     @ApiPropertyOptional({
         description: "Employee's email",
         example: 'abbott@arrived.com'
     })
-    email: string
+    email?: string
 }

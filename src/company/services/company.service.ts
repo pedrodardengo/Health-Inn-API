@@ -29,9 +29,7 @@ export class CompanyService {
         const employee = await this.employeeService.getEmployeeByCPF(workRelationDTO.employeeCPF)
         const company = await this.getCompanyByCNPJ(workRelationDTO.companyCNPJ)
         const workRelation = new WorkRelation().build(employee, company, workRelationDTO)
-        if (workRelationDTO.isActive) {
-            await this.companyRepo.inactivateAllWorkRelationsOfEmployee(employee)
-        }
+        if (workRelationDTO.isActive) await this.companyRepo.inactivateAllWorkRelationsOfEmployee(employee)
         await this.companyRepo.createWorkRelation(workRelation)
     }
 

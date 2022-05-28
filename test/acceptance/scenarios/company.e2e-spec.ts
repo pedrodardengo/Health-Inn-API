@@ -26,10 +26,6 @@ describe('Companies Behavior', () => {
 
     describe('behaviour of work relation', () => {
 
-        // beforeEach(async () => {
-        //
-        // })
-
         it('should add a work relation for a specific company and employee and retrieve it later',
             async () => {
                 // Arrange

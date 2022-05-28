@@ -11,7 +11,7 @@ export class Company {
     @Column()
     name: string
 
-    @Column()
+    @Column({unique: true})
     cnpj: string
 
     @OneToMany(

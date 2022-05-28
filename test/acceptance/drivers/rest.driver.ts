@@ -7,9 +7,9 @@ import {WorkRelation} from "../../../src/company/entities/work-relation.entity";
 import {UpdateEmployeeDTO} from "../../../src/employee/dto/update-employee.dto";
 
 
-const EMPLOYEE_URL = '/employee'
-const COMPANY_URL = '/company'
-const WORK_URL = '/work'
+const EMPLOYEE_URL = '/api/employee'
+const COMPANY_URL = '/api/company'
+const WORK_URL = '/api/work'
 
 export class RestDriver {
     private requester: request.SuperTest<request.Test>
@@ -18,44 +18,56 @@ export class RestDriver {
         this.requester = appConn.requester
     }
 
-    async registerEmployee(employeeData: EmployeeDTO): Promise<void> {
-        await this.requester.post(EMPLOYEE_URL)
-            .send(employeeData)
-            .set('Accept', 'application/json')
+    private throwErrorIfNotExpectedStatus(expectedStatus: number, response: request.Response): void {
+        if (response.status != expectedStatus) {
+            console.log(response.body)
+            throw new Error(response.body.message)
+        }
     }
 
-    async getEmployee(cpf: string, assertNotFound: boolean): Promise<EmployeeDTO> {
+    async registerEmployee(employeeData: EmployeeDTO): Promise<void> {
+        const response = await this.requester.post(EMPLOYEE_URL)
+            .send(employeeData)
+            .set('Accept', 'application/json')
+        this.throwErrorIfNotExpectedStatus(201, response)
+    }
+
+    async getEmployee(cpf: string): Promise<EmployeeDTO> {
         const response = await this.requester.get(`${EMPLOYEE_URL}/${cpf}`)
-        if (assertNotFound) {
-            expect(response.body.statusCode).toBe(404)
-        }
+        if (response.status == 404) throw new Error(response.body.message)
+        this.throwErrorIfNotExpectedStatus(200, response)
         return response.body
     }
 
     async registerCompany(companyDTO: CompanyDTO): Promise<void> {
-        await this.requester.post(COMPANY_URL)
+        const response = await this.requester.post(COMPANY_URL)
             .send(companyDTO)
             .set('Accept', 'application/json')
+        this.throwErrorIfNotExpectedStatus(201, response)
     }
 
     async registerWorkRelation(workRelationDTO: WorkRelationDTO): Promise<void> {
-        await this.requester.post(WORK_URL)
+        const response = await this.requester.post(WORK_URL)
             .send(workRelationDTO)
             .set('Accept', 'application/json')
+        this.throwErrorIfNotExpectedStatus(201, response)
     }
 
     async retrieveWorkRelation(cnpj: string, cpf: string): Promise<WorkRelation> {
         const response = await this.requester.get(`${WORK_URL}/${cnpj}/${cpf}`)
+        this.throwErrorIfNotExpectedStatus(200, response)
         return response.body
     }
 
     async deleteEmployee(cpf: string) {
-        await this.requester.delete(`${EMPLOYEE_URL}/${cpf}`)
+        const response = await this.requester.delete(`${EMPLOYEE_URL}/${cpf}`)
+        this.throwErrorIfNotExpectedStatus(200, response)
     }
 
     async updateEmployee(cpf: string, updateEmployeeDTO: UpdateEmployeeDTO) {
-        await this.requester.patch(`${EMPLOYEE_URL}/${cpf}`)
+        const response = await this.requester.patch(`${EMPLOYEE_URL}/${cpf}`)
             .send(updateEmployeeDTO)
             .set('Accept', 'application/json')
+        this.throwErrorIfNotExpectedStatus(200, response)
     }
 }

@@ -14,7 +14,7 @@ import {CompanyModule} from "./company/company.module";
          database: "db.sqlite",//":memory:",
          entities: [Employee, Address, Company, WorkRelation],
          synchronize: true,
-         logging: true
+         logging: false
      }),
       EmployeeModule,
       CompanyModule

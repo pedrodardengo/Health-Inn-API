@@ -37,6 +37,14 @@ describe('Employees Behavior', () => {
         employeeDSL.assertEmployeesAreTheSame(employee, employeeData)
     })
 
+    it('should not be able to add employee without phone and email', async () => {
+        // Arrange
+        const employeeData: EmployeeDTO = new EmployeeExampleBuilder().withoutEmail().withoutPhoneNumber().employee
+
+        // Act Assert
+        await employeeDSL.assertRegistrationFails(employeeData)
+    })
+
     it ('should be able to delete an employee and not be able to retrieve it', async () => {
         // Arrange
         const employeeData = await employeeDSL.givenEmployee()
