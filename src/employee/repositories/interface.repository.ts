@@ -10,5 +10,5 @@ export abstract class EmployeeRepository {
 
     abstract deleteByCPF(cpf: string): Promise<void>
 
-    abstract update(cpf: string, updateEmployeeDTO: UpdateEmployeeDTO): Promise<void>
+    abstract update(id: number, updateEmployeeDTO: UpdateEmployeeDTO): Promise<void>
 }

@@ -27,6 +27,7 @@ export class EmployeeService {
     }
 
     async updateEmployee(cpf: string, updateEmployeeDTO: UpdateEmployeeDTO): Promise<void> {
-        await this.employeeRepo.update(cpf, updateEmployeeDTO)
+        const employee = await this.employeeRepo.getByCPF(cpf)
+        await this.employeeRepo.update(employee.id, updateEmployeeDTO)
     }
 }

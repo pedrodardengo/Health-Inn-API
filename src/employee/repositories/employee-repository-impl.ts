@@ -28,13 +28,14 @@ export class EmployeeRepositoryImpl implements EmployeeRepository {
 
     async deleteByCPF(cpf: string): Promise<void> {
         const employee = await this.employeeRepo.findOne({where: {cpf}})
+        if (!employee) return
         await this.addressRepo.delete({id: employee.address.id})
         await this.employeeRepo.delete({cpf})
     }
 
-    async update(cpf: string, updateEmployeeDTO: UpdateEmployeeDTO): Promise<void> {
-        const employee = await this.employeeRepo.findOne({where: {cpf}})
-        const updateEmployeeEntity = await this.employeeRepo.preload({id: employee.id, ...updateEmployeeDTO})
+    async update(id: number, updateEmployeeDTO: UpdateEmployeeDTO): Promise<void> {
+        const updateEmployeeEntity = await this.employeeRepo.preload({id, ...updateEmployeeDTO})
+        if (!updateEmployeeEntity) return
         await this.employeeRepo.save(updateEmployeeEntity)
     }
 }

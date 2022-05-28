@@ -2,7 +2,6 @@ import {RestDriver} from "../drivers/rest.driver";
 import {EmployeeExampleBuilder} from "../../tools/employee-example-builder";
 import {EmployeeDTO} from "../../../src/employee/dto/employee.dto";
 import {UpdateEmployeeDTO} from "../../../src/employee/dto/update-employee.dto";
-import {faker} from "@faker-js/faker";
 
 
 export class EmployeeDSL {
@@ -44,18 +43,6 @@ export class EmployeeDSL {
 
     async assertEmployeeCantBeFound(cpf: string): Promise<void> {
         await this.getEmployee(cpf, {assertNotFound: true})
-    }
-
-    generateUpdateEmployeeData(): UpdateEmployeeDTO {
-        return {
-            name: faker.name.findName(),
-            phoneNumber: faker.phone.phoneNumber(),
-            email: faker.internet.email(),
-            address: {
-                street: faker.address.streetName(),
-                zipCode: faker.address.zipCode()
-            }
-        }
     }
 
     async updateEmployee(cpf: string, updateEmployeeDTO: UpdateEmployeeDTO): Promise<void> {

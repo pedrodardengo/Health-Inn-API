@@ -1,6 +1,7 @@
 import {EmployeeDTO} from "../../src/employee/dto/employee.dto";
 import * as cpfGenerator from 'gerador-validador-cpf';
 import {faker} from "@faker-js/faker";
+import {UpdateEmployeeDTO} from "../../src/employee/dto/update-employee.dto";
 
 
 export class EmployeeExampleBuilder {
@@ -15,11 +16,11 @@ export class EmployeeExampleBuilder {
             email: faker.internet.email(),
             phoneNumber: faker.phone.phoneNumber(),
             address: {
-                country: faker.name.findName(),
-                state: faker.random.alpha(2).toUpperCase(),
-                city: faker.name.findName(),
-                street: faker.name.findName(),
-                number: parseInt(faker.random.numeric(2)) * 10,
+                country: faker.address.country(),
+                state: faker.address.state(),
+                city: faker.address.city(),
+                street: faker.address.street(),
+                number: faker.address.buildingNumber(),
                 zipCode: faker.random.numeric(7)
             }
         }
@@ -33,5 +34,17 @@ export class EmployeeExampleBuilder {
     withoutPhoneNumber(): EmployeeExampleBuilder {
         delete this.employee.phoneNumber
         return this
+    }
+
+    public static generateUpdateEmployeeData(): UpdateEmployeeDTO {
+        return {
+            name: faker.name.findName(),
+            phoneNumber: faker.phone.phoneNumber(),
+            email: faker.internet.email(),
+            address: {
+                street: faker.address.street(),
+                zipCode: faker.address.zipCode()
+            }
+        }
     }
 }

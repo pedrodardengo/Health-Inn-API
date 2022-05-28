@@ -3,6 +3,7 @@ import {EmployeeDSL} from "../dsl/employee.dsl";
 import {RestDriver} from "../drivers/rest.driver";
 import {EmployeeDTO} from "../../../src/employee/dto/employee.dto";
 import {clearDB} from "../../tools/database.interactions";
+import {EmployeeExampleBuilder} from "../../tools/employee-example-builder";
 
 describe('Employees Behavior', () => {
     let employeeDSL: EmployeeDSL
@@ -50,7 +51,7 @@ describe('Employees Behavior', () => {
     it ('should be able to update an employee and retrieve the updated employee', async () => {
         // Arrange
         const employeeData = await employeeDSL.givenEmployee()
-        const updatedEmployeeData = employeeDSL.generateUpdateEmployeeData()
+        const updatedEmployeeData = EmployeeExampleBuilder.generateUpdateEmployeeData()
 
         // Act
         await employeeDSL.updateEmployee(employeeData.cpf, updatedEmployeeData)

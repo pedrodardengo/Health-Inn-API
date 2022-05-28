@@ -1,4 +1,4 @@
-import { IsEmail, IsString, ValidateIf } from "class-validator"
+import { IsEmail, IsString, ValidateIf, IsNumberString } from "class-validator"
 import {IsCPF} from "brazilian-class-validator";
 import { AddressDTO } from "./address.dto"
 import {IsStringDate} from "@nestjsi/class-validator";
@@ -8,7 +8,7 @@ export class EmployeeDTO {
     @IsCPF()
     cpf: string
 
-    @IsString()
+    @IsNumberString()
     rg: string
 
     @IsString()

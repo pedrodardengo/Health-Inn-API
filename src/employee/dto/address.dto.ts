@@ -1,5 +1,4 @@
-import {IsString, IsOptional} from "class-validator";
-import {IsPositiveInt} from "@nestjsi/class-validator";
+import {IsString, IsOptional, IsNumberString} from "class-validator";
 
 
 export class AddressDTO {
@@ -16,8 +15,8 @@ export class AddressDTO {
     @IsString()
     street: string
 
-    @IsPositiveInt()
-    number: number
+    @IsNumberString()
+    number: string
 
     @IsOptional()
     @IsString()
