@@ -12,5 +12,5 @@ export abstract class CompanyRepository {
 
     abstract inactivateAllWorkRelationsOfEmployee(employee: Employee): Promise<void>
 
-    abstract getWorkRelationByCPFAndCNPJ(employeeId: number, companyId: number): Promise<WorkRelation>
+    abstract getWorkRelationByIds(employeeId: number, companyId: number): Promise<WorkRelation>
 }

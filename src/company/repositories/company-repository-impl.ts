@@ -32,7 +32,7 @@ export class CompanyRepositoryImpl implements CompanyRepository {
         await this.workRelationRepo.update({employeeId: employee.id}, {isActive: false})
     }
 
-    async getWorkRelationByCPFAndCNPJ(employeeId: number, companyId: number): Promise<WorkRelation> {
+    async getWorkRelationByIds(employeeId: number, companyId: number): Promise<WorkRelation> {
         return await this.workRelationRepo.findOne({where: {employeeId, companyId}})
     }
 }

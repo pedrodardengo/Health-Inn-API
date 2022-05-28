@@ -8,11 +8,12 @@ export class EmployeeExampleBuilder {
     public employee: EmployeeDTO
 
     constructor() {
+        const birthDate = faker.date.birthdate();
         this.employee = {
             name: faker.name.findName(),
             cpf: cpfGenerator.generate(),
             rg: faker.random.numeric(7),
-            birthday: faker.date.birthdate().toISOString(),
+            birthday: `${birthDate.getDay()}-${birthDate.getMonth()}-${birthDate.getFullYear()}`,
             email: faker.internet.email(),
             phoneNumber: faker.phone.phoneNumber(),
             address: {

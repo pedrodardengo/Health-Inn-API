@@ -14,7 +14,11 @@ export class Company {
     @Column()
     cnpj: string
 
-    @OneToMany(() => WorkRelation, workRelation => workRelation.company, {onDelete: "CASCADE"})
+    @OneToMany(
+        () => WorkRelation,
+            workRelation => workRelation.company,
+        {onDelete: "CASCADE"}
+    )
     workRelations: WorkRelation[]
 
     build(companyDTO: CompanyDTO): Company {

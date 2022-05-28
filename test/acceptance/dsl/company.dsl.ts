@@ -1,11 +1,9 @@
 import {RestDriver} from "../drivers/rest.driver";
 import {CompanyDTO} from "../../../src/company/dto/company.dto";
 import {WorkRelationDTO} from "../../../src/company/dto/work-relation.dto";
-import {EmployeeDTO} from "../../../src/employee/dto/employee.dto";
-import {faker} from "@faker-js/faker";
-import * as cnpjGenerator from "@fnando/cnpj"
 import {WorkRelation} from "../../../src/company/entities/work-relation.entity";
 import {EmployeeExampleBuilder} from "../../tools/employee-example-builder";
+import {generateRandomCompanyExample, generateWorkRelationExample} from "../../tools/example-factory";
 
 
 type GivenWorkRelation = {
@@ -27,20 +25,11 @@ export class CompanyDSL {
     }
 
     generateRandomCompany(): CompanyDTO {
-        return {
-            name: faker.name.findName(),
-            cnpj: cnpjGenerator.generate(),
-        }
+        return generateRandomCompanyExample()
     }
 
     generateRandomWorkRelation(employeeCPF: string, companyCNPJ: string, isActive: boolean): WorkRelationDTO {
-        return {
-            isActive,
-            companyCNPJ,
-            employeeCPF,
-            position: faker.name.jobTitle(),
-            sector: faker.name.jobType()
-        }
+        return generateWorkRelationExample(employeeCPF, companyCNPJ, isActive)
     }
 
     async registerWorkRelation(workRelationDTO: WorkRelationDTO): Promise<void> {

@@ -11,7 +11,7 @@ async function bootstrap() {
       .setVersion('0.1')
       .build()
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('docs', app, document, { useGlobalPrefix: true })
+  SwaggerModule.setup('docs', app, document)
 
   app.setGlobalPrefix("api")
   await app.listen(3000)

@@ -54,7 +54,7 @@ export class RestDriver {
     }
 
     async updateEmployee(cpf: string, updateEmployeeDTO: UpdateEmployeeDTO) {
-        await this.requester.put(`${EMPLOYEE_URL}/${cpf}`)
+        await this.requester.patch(`${EMPLOYEE_URL}/${cpf}`)
             .send(updateEmployeeDTO)
             .set('Accept', 'application/json')
     }

@@ -38,7 +38,7 @@ export class CompanyService {
     async getWorkRelation(employeeCPF: string, companyCNPJ: string): Promise<WorkRelationDTO> {
         const company = await this.getCompanyByCNPJ(companyCNPJ)
         const employee = await this.employeeService.getEmployeeByCPF(employeeCPF)
-        const workRelation = await this.companyRepo.getWorkRelationByCPFAndCNPJ(employee.id, company.id)
+        const workRelation = await this.companyRepo.getWorkRelationByIds(employee.id, company.id)
         if (!workRelation) {
             throw new NotFoundException(COMPANY_MESSAGES.NOT_FOUND_WORK_RELATION(employeeCPF, companyCNPJ))
         }

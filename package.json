@@ -21,8 +21,6 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@fnando/cnpj": "^1.0.2",
-    "@nestjs/class-transformer": "^0.4.0",
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
@@ -30,7 +28,6 @@
     "@nestjs/typeorm": "^8.0.4",
     "@nestjsi/class-validator": "^0.1.4",
     "brazilian-class-validator": "^0.1.6",
-    "gerador-validador-cpf": "^5.0.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
@@ -39,6 +36,8 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.1.0",
+    "@fnando/cnpj": "^1.0.2",
+    "@golevelup/nestjs-testing": "^0.1.2",
     "@nestjs/cli": "^8.0.0",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",
@@ -52,6 +51,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "faker": "E5.5.3",
+    "gerador-validador-cpf": "^5.0.2",
     "jest": "^28.0.3",
     "prettier": "^2.3.2",
     "source-map-support": "^0.5.20",
