@@ -102,14 +102,10 @@ describe('CompanyRepositoryImpl Integration test', () => {
 
         it('should create entry workRelation table', async () => {
             // Arrange
-            const company = await companyRepoImpl.create(
-                generateRandomCompanyExample())
-            const employee = await employeeRepo.save(
-                new Employee().build(new EmployeeExampleBuilder().employee))
-            const workRelationData = generateWorkRelationExample(employee.cpf,
-                company.cnpj, true)
-            const workRelation = new WorkRelation().build(employee, company,
-                workRelationData)
+            const company = await companyRepoImpl.create(generateRandomCompanyExample())
+            const employee = await employeeRepo.save(new Employee().build(new EmployeeExampleBuilder().employee))
+            const workRelationData = generateWorkRelationExample(employee.cpf, company.cnpj, true)
+            const workRelation = new WorkRelation().build(employee, company, workRelationData)
             await companyRepoImpl.createWorkRelation(workRelation)
 
             // Act
