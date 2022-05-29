@@ -15,7 +15,7 @@ export class WorkRelationDTO {
     @IsCPF()
     @ApiProperty({
         description: "Employee's CPF",
-        example: '56999553333'
+        example: '69755305050'
     })
     employeeCPF: string
 
@@ -29,14 +29,14 @@ export class WorkRelationDTO {
     @IsString()
     @ApiProperty({
         description: "Company's sector where the employee works",
-        example: true
+        example: 'IT'
     })
     sector: string
 
     @IsString()
     @ApiProperty({
         description: "Employee's job at the company",
-        example: true
+        example: 'Software Engineer'
     })
     position: string
 

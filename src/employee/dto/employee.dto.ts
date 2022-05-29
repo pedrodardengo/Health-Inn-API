@@ -9,7 +9,7 @@ export class EmployeeDTO {
     @IsCPF()
     @ApiProperty({
         description: "Employee's CPF",
-        example: '56999553333'
+        example: '69755305050'
     })
     cpf: string
 
@@ -30,7 +30,7 @@ export class EmployeeDTO {
     @IsStringDate()
     @ApiProperty({
         description: "A date in string format",
-        example: '22-10-1970'
+        example: '1970-10-22'
     })
     birthday: string
 

@@ -11,7 +11,7 @@ import {CompanyModule} from "./company/company.module";
   imports: [
      TypeOrmModule.forRoot({
          type: "sqlite",
-         database: "db.sqlite",//":memory:",
+         database: ":memory:",
          entities: [Employee, Address, Company, WorkRelation],
          synchronize: true,
          logging: false

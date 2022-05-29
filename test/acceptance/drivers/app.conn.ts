@@ -20,7 +20,6 @@ export class AppConn {
 
         this.app = moduleFixture.createNestApplication()
         this.app.useGlobalPipes(new ValidationPipe({ transform: true }));
-        this.app.setGlobalPrefix("api")
         await this.app.listen(this.port)
         this.requester = supertestRequest(this.app.getHttpServer())
     }
