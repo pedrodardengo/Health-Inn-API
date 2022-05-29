@@ -7,9 +7,9 @@ import {WorkRelation} from "../../../src/company/entities/work-relation.entity";
 import {UpdateEmployeeDTO} from "../../../src/employee/dto/update-employee.dto";
 
 
-const EMPLOYEE_URL = '/api/employee'
-const COMPANY_URL = '/api/company'
-const WORK_URL = '/api/work'
+const EMPLOYEE_URL = '/employee'
+const COMPANY_URL = '/company'
+const WORK_URL = '/work'
 
 export class RestDriver {
     private requester: request.SuperTest<request.Test>
