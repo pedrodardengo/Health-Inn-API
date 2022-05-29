@@ -1,13 +1,13 @@
-import {Column, Entity, OneToOne, PrimaryGeneratedColumn} from "typeorm";
-import {Employee} from "./employee.entity";
-import {AddressDTO} from "../dto/address.dto";
+import {Column, Entity, OneToOne, PrimaryGeneratedColumn} from 'typeorm'
+import {Employee} from './employee.entity'
+import {AddressDTO} from '../dto/address.dto'
 
-@Entity({name: "Address"})
+@Entity({name: 'Address'})
 export class Address {
-    
+
     @PrimaryGeneratedColumn()
     id: number
-    
+
     @Column()
     country: string
 
@@ -28,10 +28,10 @@ export class Address {
 
     @Column()
     zipCode: string
-    
+
     @OneToOne(
         () => Employee, employee => employee.address,
-        {onDelete: "CASCADE"}
+        {onDelete: 'CASCADE'},
     )
     employee: Employee
 

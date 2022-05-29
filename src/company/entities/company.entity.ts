@@ -1,9 +1,8 @@
-import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import {CompanyDTO} from "../dto/company.dto";
-import {WorkRelation} from "./work-relation.entity";
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm'
+import {CompanyDTO} from '../dto/company.dto'
+import {WorkRelation} from './work-relation.entity'
 
-
-@Entity({name: "Company"})
+@Entity({name: 'Company'})
 export class Company {
     @PrimaryGeneratedColumn()
     id: number
@@ -16,8 +15,8 @@ export class Company {
 
     @OneToMany(
         () => WorkRelation,
-            workRelation => workRelation.company,
-        {onDelete: "CASCADE"}
+        workRelation => workRelation.company,
+        {onDelete: 'CASCADE'},
     )
     workRelations: WorkRelation[]
 

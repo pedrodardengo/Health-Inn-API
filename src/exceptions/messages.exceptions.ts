@@ -13,4 +13,4 @@ export const COMPANY_MESSAGES = {
         return `Work relation between company with CNPJ ${cnpj} and employee with CPF ${cpf} already exists`
     },
 
-    }
+}

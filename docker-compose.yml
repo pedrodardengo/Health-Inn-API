@@ -5,6 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    entrypoint: ["npm", "run", "start"]
+    entrypoint: [ "npm", "run", "start" ]
     ports:
       - "3000:3000"

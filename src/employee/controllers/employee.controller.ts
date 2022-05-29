@@ -1,21 +1,23 @@
-import {Body, Controller, Delete, Get, Param, Post, Patch} from '@nestjs/common';
-import {EmployeeDTO} from "../dto/employee.dto";
-import {EmployeeService} from "../services/employee.service";
-import {Employee} from "../entities/employee.entity";
-import {UpdateEmployeeDTO} from "../dto/update-employee.dto";
-import {ApiCreatedResponse, ApiOperation} from "@nestjs/swagger";
+import {Body, Controller, Delete, Get, Param, Patch, Post,} from '@nestjs/common'
+import {EmployeeDTO} from '../dto/employee.dto'
+import {EmployeeService} from '../services/employee.service'
+import {Employee} from '../entities/employee.entity'
+import {UpdateEmployeeDTO} from '../dto/update-employee.dto'
+import {ApiCreatedResponse, ApiOperation} from '@nestjs/swagger'
 
 @Controller('/employee')
 export class EmployeeController {
 
-    constructor(private employeeService: EmployeeService) {}
+    constructor(private employeeService: EmployeeService) {
+    }
 
     @Post()
     @ApiOperation({
         summary: 'Creates a single employee',
         tags: ['Employees Functionalities'],
     })
-    @ApiCreatedResponse({ description: 'The Employee record has been successfully created.'})
+    @ApiCreatedResponse(
+        {description: 'The Employee record has been successfully created.'})
     async registerEmployee(@Body() registerEmployeeDTO: EmployeeDTO): Promise<void> {
         await this.employeeService.createEmployee(registerEmployeeDTO)
     }
@@ -23,7 +25,7 @@ export class EmployeeController {
     @Get('/:cpf')
     @ApiOperation({
         summary: 'Get a single Employee identified by its CPF',
-        tags: ['Employees Functionalities']
+        tags: ['Employees Functionalities'],
     })
     async getEmployee(@Param('cpf') cpf: string): Promise<Employee> {
         return await this.employeeService.getEmployeeByCPF(cpf)
@@ -32,7 +34,7 @@ export class EmployeeController {
     @Delete('/:cpf')
     @ApiOperation({
         summary: 'Delete a single Employee identified by its CPF',
-        tags: ['Employees Functionalities']
+        tags: ['Employees Functionalities'],
     })
     async deleteEmployee(@Param('cpf') cpf: string): Promise<void> {
         await this.employeeService.deleteEmployeeByCPF(cpf)
@@ -41,11 +43,11 @@ export class EmployeeController {
     @Patch('/:cpf')
     @ApiOperation({
         summary: 'Updates a single Employee identified by its CPF',
-        tags: ['Employees Functionalities']
+        tags: ['Employees Functionalities'],
     })
     async updateEmployee(
         @Param('cpf') cpf: string,
-        @Body() updateEmployeeDTO: UpdateEmployeeDTO
+        @Body() updateEmployeeDTO: UpdateEmployeeDTO,
     ): Promise<void> {
         await this.employeeService.updateEmployee(cpf, updateEmployeeDTO)
     }

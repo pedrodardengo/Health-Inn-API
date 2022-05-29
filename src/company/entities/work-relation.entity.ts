@@ -1,24 +1,25 @@
-import {Column, Entity, ManyToOne, PrimaryColumn, RelationId} from "typeorm";
-import {Company} from "./company.entity";
-import {Employee} from "../../employee/entities/employee.entity";
-import {WorkRelationDTO} from "../dto/work-relation.dto";
-
+import {Column, Entity, ManyToOne, PrimaryColumn, RelationId} from 'typeorm'
+import {Company} from './company.entity'
+import {Employee} from '../../employee/entities/employee.entity'
+import {WorkRelationDTO} from '../dto/work-relation.dto'
 
 @Entity({name: 'WorkRelation'})
 export class WorkRelation {
 
     @RelationId((workRelation: WorkRelation) => workRelation.company)
     @PrimaryColumn()
-    companyId: number;
+    companyId: number
 
-    @ManyToOne(() => Company, company => company.workRelations, {onDelete: "CASCADE"})
+    @ManyToOne(() => Company, company => company.workRelations,
+        {onDelete: 'CASCADE'})
     company: Company
 
     @RelationId((workRelation: WorkRelation) => workRelation.employee)
     @PrimaryColumn()
-    employeeId: number;
+    employeeId: number
 
-    @ManyToOne(() => Employee, employee => employee.workRelations, {onDelete: "CASCADE"})
+    @ManyToOne(() => Employee, employee => employee.workRelations,
+        {onDelete: 'CASCADE'})
     employee: Employee
 
     @Column()
@@ -30,7 +31,9 @@ export class WorkRelation {
     @Column()
     position: string
 
-    build(employee: Employee, company: Company, workRelationDTO: WorkRelationDTO) {
+    build(
+        employee: Employee, company: Company,
+        workRelationDTO: WorkRelationDTO) {
         this.employee = employee
         this.company = company
         this.isActive = workRelationDTO.isActive

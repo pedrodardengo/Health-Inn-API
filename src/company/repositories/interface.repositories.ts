@@ -1,7 +1,7 @@
-import {Company} from "../entities/company.entity";
-import {CompanyDTO} from "../dto/company.dto";
-import {WorkRelation} from "../entities/work-relation.entity";
-import {Employee} from "../../employee/entities/employee.entity";
+import {Company} from '../entities/company.entity'
+import {CompanyDTO} from '../dto/company.dto'
+import {WorkRelation} from '../entities/work-relation.entity'
+import {Employee} from '../../employee/entities/employee.entity'
 
 export abstract class CompanyRepository {
     abstract create(companyDTO: CompanyDTO): Promise<Company>
@@ -12,5 +12,6 @@ export abstract class CompanyRepository {
 
     abstract inactivateAllWorkRelationsOfEmployee(employee: Employee): Promise<void>
 
-    abstract getWorkRelationByIds(employeeId: number, companyId: number): Promise<WorkRelation>
+    abstract getWorkRelationByIds(
+        employeeId: number, companyId: number): Promise<WorkRelation>
 }

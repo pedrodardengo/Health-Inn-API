@@ -1,9 +1,8 @@
-import {RestDriver} from "../drivers/rest.driver";
-import {EmployeeExampleBuilder} from "../../tools/employee-example-builder";
-import {EmployeeDTO} from "../../../src/employee/dto/employee.dto";
-import {UpdateEmployeeDTO} from "../../../src/employee/dto/update-employee.dto";
-import {EMPLOYEE_MESSAGES} from "../../../src/exceptions/messages.exceptions";
-
+import {RestDriver} from '../drivers/rest.driver'
+import {EmployeeExampleBuilder} from '../../tools/employee-example-builder'
+import {EmployeeDTO} from '../../../src/employee/dto/employee.dto'
+import {UpdateEmployeeDTO,} from '../../../src/employee/dto/update-employee.dto'
+import {EMPLOYEE_MESSAGES} from '../../../src/exceptions/messages.exceptions'
 
 export class EmployeeDSL {
     private restDriver: RestDriver
@@ -22,12 +21,13 @@ export class EmployeeDSL {
     }
 
     public async getEmployee(
-        cpf: string
+        cpf: string,
     ): Promise<EmployeeDTO> {
         return this.restDriver.getEmployee(cpf)
     }
 
-    public assertEmployeesAreTheSame(employeeDTO1: EmployeeDTO, employeeDTO2: EmployeeDTO): void {
+    public assertEmployeesAreTheSame(
+        employeeDTO1: EmployeeDTO, employeeDTO2: EmployeeDTO): void {
         return expect(employeeDTO1).toMatchObject(employeeDTO2)
     }
 
@@ -41,14 +41,15 @@ export class EmployeeDSL {
         return await this.restDriver.deleteEmployee(cpf)
     }
 
-    async updateEmployee(cpf: string, updateEmployeeDTO: UpdateEmployeeDTO): Promise<void> {
+    async updateEmployee(
+        cpf: string, updateEmployeeDTO: UpdateEmployeeDTO): Promise<void> {
         await this.restDriver.updateEmployee(cpf, updateEmployeeDTO)
     }
 
     assertEmployeeWasUpdated(
         updatedEmployee: EmployeeDTO,
         employeeData: EmployeeDTO,
-        updatedEmployeeData: UpdateEmployeeDTO
+        updatedEmployeeData: UpdateEmployeeDTO,
     ): void {
         expect(updatedEmployee).toMatchObject(Object.assign(employeeData, updatedEmployeeData))
     }
@@ -58,8 +59,6 @@ export class EmployeeDSL {
     }
 
     async assertRegistrationFails(employeeData: EmployeeDTO) {
-        await expect(this.registerEmployee(employeeData))
-            .rejects
-            .toThrow()
+        await expect(this.registerEmployee(employeeData)).rejects.toThrow()
     }
 }

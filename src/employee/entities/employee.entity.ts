@@ -1,9 +1,9 @@
-import {Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
-import {Address} from "./adress.entity";
-import {EmployeeDTO} from "../dto/employee.dto";
-import {WorkRelation} from "../../company/entities/work-relation.entity";
+import {Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn,} from 'typeorm'
+import {Address} from './adress.entity'
+import {EmployeeDTO} from '../dto/employee.dto'
+import {WorkRelation} from '../../company/entities/work-relation.entity'
 
-@Entity({name: "Employee"})
+@Entity({name: 'Employee'})
 export class Employee {
     @PrimaryGeneratedColumn()
     id: number
@@ -17,23 +17,24 @@ export class Employee {
     @Column()
     name: string
 
-    @Column({ type: 'date' })
+    @Column({type: 'date'})
     birthday: string
 
-    @Column({ nullable: true })
+    @Column({nullable: true})
     email: string
 
-    @Column({ nullable: true })
+    @Column({nullable: true})
     phoneNumber: string
 
     @OneToOne(
         () => Address, address => address.employee,
-        {onDelete: "CASCADE", cascade: true, eager: true}
+        {onDelete: 'CASCADE', cascade: true, eager: true},
     )
     @JoinColumn()
     address: Address
 
-    @OneToMany(() => WorkRelation, workRelation => workRelation.employee, {onDelete: "CASCADE"})
+    @OneToMany(() => WorkRelation, workRelation => workRelation.employee,
+        {onDelete: 'CASCADE'})
     workRelations: WorkRelation[]
 
     build(employeeDTO: EmployeeDTO): Employee {

@@ -1,8 +1,7 @@
-import {EmployeeDTO} from "../../src/employee/dto/employee.dto";
-import * as cpfGenerator from 'gerador-validador-cpf';
-import {faker} from "@faker-js/faker";
-import {UpdateEmployeeDTO} from "../../src/employee/dto/update-employee.dto";
-
+import {EmployeeDTO} from '../../src/employee/dto/employee.dto'
+import * as cpfGenerator from 'gerador-validador-cpf'
+import {faker} from '@faker-js/faker'
+import {UpdateEmployeeDTO} from '../../src/employee/dto/update-employee.dto'
 
 export class EmployeeExampleBuilder {
     public employee: EmployeeDTO
@@ -21,8 +20,20 @@ export class EmployeeExampleBuilder {
                 city: faker.address.city(),
                 street: faker.address.street(),
                 number: faker.address.buildingNumber(),
-                zipCode: faker.random.numeric(7)
-            }
+                zipCode: faker.random.numeric(7),
+            },
+        }
+    }
+
+    public static generateUpdateEmployeeData(): UpdateEmployeeDTO {
+        return {
+            name: faker.name.findName(),
+            phoneNumber: faker.phone.phoneNumber(),
+            email: faker.internet.email(),
+            address: {
+                street: faker.address.street(),
+                zipCode: faker.address.zipCode(),
+            },
         }
     }
 
@@ -34,17 +45,5 @@ export class EmployeeExampleBuilder {
     withoutPhoneNumber(): EmployeeExampleBuilder {
         delete this.employee.phoneNumber
         return this
-    }
-
-    public static generateUpdateEmployeeData(): UpdateEmployeeDTO {
-        return {
-            name: faker.name.findName(),
-            phoneNumber: faker.phone.phoneNumber(),
-            email: faker.internet.email(),
-            address: {
-                street: faker.address.street(),
-                zipCode: faker.address.zipCode()
-            }
-        }
     }
 }
