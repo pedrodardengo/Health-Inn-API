@@ -65,7 +65,17 @@ describe('EmployeeRepositoryImpl Integration test', () => {
             // Assert
             expect(savedEmployee).toMatchObject(employeeData)
         })
+        it('should not throw if trying to create an already existing employee', async () => {
+            // Arrange
+            const employeeData = new EmployeeExampleBuilder().employee
+            await employeeRepoImpl.create(employeeData)
 
+            // Act
+            const employee = await employeeRepoImpl.create(employeeData)
+
+            // Assert
+            expect(employee).toBeNull()
+        })
     })
 
     describe('getByCPF', () => {

@@ -34,7 +34,7 @@ export class RestDriver {
 
     async getEmployee(cpf: string): Promise<EmployeeDTO> {
         const response = await this.requester.get(`${EMPLOYEE_URL}/${cpf}`)
-        if (response.status == 404) throw new Error(response.body.message)
+            .set('Accept', 'application/json')
         this.throwErrorIfNotExpectedStatus(200, response)
         return response.body
     }
@@ -55,12 +55,14 @@ export class RestDriver {
 
     async retrieveWorkRelation(cnpj: string, cpf: string): Promise<WorkRelation> {
         const response = await this.requester.get(`${WORK_URL}/${cnpj}/${cpf}`)
+            .set('Accept', 'application/json')
         this.throwErrorIfNotExpectedStatus(200, response)
         return response.body
     }
 
     async deleteEmployee(cpf: string) {
         const response = await this.requester.delete(`${EMPLOYEE_URL}/${cpf}`)
+            .set('Accept', 'application/json')
         this.throwErrorIfNotExpectedStatus(200, response)
     }
 

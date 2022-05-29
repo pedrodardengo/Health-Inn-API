@@ -1,4 +1,4 @@
-import {Injectable, NotFoundException} from "@nestjs/common";
+import {ConflictException, Injectable, NotFoundException} from "@nestjs/common";
 import {CompanyRepository} from "../repositories/interface.repositories";
 import {CompanyDTO} from "../dto/company.dto";
 import {WorkRelationDTO} from "../dto/work-relation.dto";
@@ -16,7 +16,9 @@ export class CompanyService {
         ) {}
 
     async registerCompany(companyDTO: CompanyDTO) {
-        return await this.companyRepo.create(companyDTO);
+        const company = await this.companyRepo.create(companyDTO)
+        if (!company) throw new ConflictException(COMPANY_MESSAGES.ALREADY_EXISTS(companyDTO.cnpj));
+        return company;
     }
 
     async getCompanyByCNPJ(cnpj: string): Promise<Company> {
@@ -30,7 +32,12 @@ export class CompanyService {
         const company = await this.getCompanyByCNPJ(workRelationDTO.companyCNPJ)
         const workRelation = new WorkRelation().build(employee, company, workRelationDTO)
         if (workRelationDTO.isActive) await this.companyRepo.inactivateAllWorkRelationsOfEmployee(employee)
-        await this.companyRepo.createWorkRelation(workRelation)
+        const savedWorkRelation = await this.companyRepo.createWorkRelation(workRelation)
+        if (!savedWorkRelation) {
+            throw new ConflictException(
+                COMPANY_MESSAGES.WORK_RELATION_ALREADY_EXISTS(workRelationDTO.companyCNPJ, workRelationDTO.employeeCPF)
+            )
+        }
     }
 
     async getWorkRelation(employeeCPF: string, companyCNPJ: string): Promise<WorkRelationDTO> {

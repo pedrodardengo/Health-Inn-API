@@ -17,7 +17,12 @@ export class CompanyRepositoryImpl implements CompanyRepository {
 
     async create(companyDTO: CompanyDTO): Promise<Company> {
         const company = new Company().build(companyDTO)
-        return await this.companyRepo.save(company)
+        try {
+            return await this.companyRepo.save(company)
+        } catch (QueryFailedError) {
+            return null
+        }
+
     }
 
     async getCompanyByCNPJ(cnpj: string): Promise<Company> {
@@ -25,7 +30,11 @@ export class CompanyRepositoryImpl implements CompanyRepository {
     }
 
     async createWorkRelation(workRelation: WorkRelation): Promise<WorkRelation> {
-        return await this.workRelationRepo.save(workRelation)
+        try {
+            return await this.workRelationRepo.save(workRelation)
+        } catch (QueryFailedError) {
+            return null
+        }
     }
 
     async inactivateAllWorkRelationsOfEmployee(employee: Employee): Promise<void> {

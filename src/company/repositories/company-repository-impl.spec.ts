@@ -43,7 +43,7 @@ describe('CompanyRepositoryImpl Integration test', () => {
         await testingModule.close()
     })
 
-    describe('Create', () => {
+    describe('create', () => {
 
         it('should create entry company table', async () => {
             // Arrange
@@ -55,6 +55,19 @@ describe('CompanyRepositoryImpl Integration test', () => {
             // Assert
             expect(savedCompany).toMatchObject(companyData)
         })
+
+        it('should not throw if trying to save already existing company', async () => {
+            // Arrange
+            const companyData = generateRandomCompanyExample()
+            await companyRepoImpl.create(companyData)
+
+            // Act
+            const company = await companyRepoImpl.create(companyData)
+
+            // Assert
+            expect(company).toBeNull()
+        })
+
     })
 
     describe('createWorkRelation', () => {
@@ -79,6 +92,21 @@ describe('CompanyRepositoryImpl Integration test', () => {
             delete workRelation.employee
             delete workRelation.company
             expect(foundWorkRelation).toMatchObject(workRelation)
+        })
+
+        it('should create entry workRelation table', async () => {
+            // Arrange
+            const company = await companyRepoImpl.create(generateRandomCompanyExample())
+            const employee = await employeeRepo.save(new Employee().build(new EmployeeExampleBuilder().employee))
+            const workRelationData = generateWorkRelationExample(employee.cpf, company.cnpj, true)
+            const workRelation = new WorkRelation().build(employee, company, workRelationData)
+            await companyRepoImpl.createWorkRelation(workRelation)
+
+            // Act
+            const savedWorkRelation = await companyRepoImpl.createWorkRelation(workRelation)
+
+            // Assert
+            expect(savedWorkRelation).toBeNull()
         })
     })
 

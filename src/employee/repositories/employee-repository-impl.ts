@@ -18,8 +18,12 @@ export class EmployeeRepositoryImpl implements EmployeeRepository {
 
     async create(registerEmployeeDTO: EmployeeDTO): Promise<Employee> {
         const employee = new Employee().build(registerEmployeeDTO)
-        await this.addressRepo.save(employee.address)
-        return await this.employeeRepo.save(employee)
+        try {
+            await this.addressRepo.save(employee.address)
+            return await this.employeeRepo.save(employee)
+        } catch (QueryFailedError) {
+            return null
+        }
     }
 
     async getByCPF(cpf: string): Promise<Employee> {
