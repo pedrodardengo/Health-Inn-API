@@ -1,5 +1,4 @@
 import {Module} from '@nestjs/common'
-import {TypeOrmModule} from '@nestjs/typeorm'
 import {Company} from './entities/company.entity'
 import {CompanyRepository} from './repositories/interface.repositories'
 import {CompanyController} from './controllers/company.controller'
@@ -7,11 +6,12 @@ import {CompanyService} from './services/company.service'
 import {CompanyRepositoryImpl} from './repositories/company-repository-impl'
 import {WorkRelation} from './entities/work-relation.entity'
 import {EmployeeModule} from '../employee/employee.module'
+import {provideDBModuleForFeature} from "../database.config";
 
 @Module({
     imports: [
         EmployeeModule,
-        TypeOrmModule.forFeature([Company, WorkRelation]),
+        provideDBModuleForFeature([Company, WorkRelation]),
     ],
     providers: [
         {useClass: CompanyRepositoryImpl, provide: CompanyRepository},
